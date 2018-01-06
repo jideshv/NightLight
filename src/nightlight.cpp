@@ -1,7 +1,7 @@
 #pragma SPARK_NO_PREPROCESSOR
 #include "nightlight.h"
 
-NightLightDevice::NightLightDevice() : m_lights_out_ran(false) {
+NightLightDevice::NightLightDevice() : m_lights_out_ran(false), m_last_time_check(0) {
   RGB.control(true);
   RGB.color(0, 0, 0);
 }
@@ -75,6 +75,8 @@ int NightLightDevice::CloudHandler(String command) {
 }
 
 void NightLightDevice::CheckLightsOutTime() {
+  if ((millis() - m_last_time_check) < 60000) return;
+  m_last_time_check = millis();
   if (Time.hour() == LIGHTS_OUT) {
     if (m_lights_out_ran) return;
     for (auto& light_it : m_lights) {

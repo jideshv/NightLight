@@ -13,7 +13,7 @@
 #define DEBOUNCE_TIMEOUT 100 // number of milliseconds to debounce buttons
 #define BRIGHTNESS_STEP 1 // level to change at each step
 #define RAMP_PERIOD 20 // number of milliseconds between brightness steps
-#define LIGHTS_OUT 4 // GST hour when all lights go off
+#define LIGHTS_OUT 16 // GST hour when all lights go off
 
 class NightLightDevice : public IRunner {
 public:
@@ -37,6 +37,7 @@ private:
   std::map<int, std::shared_ptr<Light>> m_lights;
   std::list<std::function<void()>> m_events;
   bool m_lights_out_ran;
+  unsigned long m_last_time_check;
 };
 
 #endif
